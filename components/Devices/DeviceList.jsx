@@ -14,7 +14,7 @@ const DeviceList = ({ devices, deviceHandlers }) => {
 
     let navigationHandler = () => {
         navigation.navigate("AddDevice", {
-            onSaveDevice: deviceHandlers.createDevice,
+            create: deviceHandlers.createDevice,
         });
     };
 

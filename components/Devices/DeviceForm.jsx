@@ -2,10 +2,13 @@ import { StyleSheet, Text, TextInput, View } from "react-native";
 import { useEffect, useState } from "react";
 import DropDownPicker from "react-native-dropdown-picker";
 import Button from "../UI/Button";
+import { useNavigation } from "@react-navigation/native";
 //db
-import { createDevice, fetchDevices } from "../../util/database";
+import { createDevice } from "../../util/database";
 
-const DeviceForm = ({onSaveDevice}) => {
+const DeviceForm = ({ onCreate }) => {
+    const navigation = useNavigation();
+
     const [open, setOpen] = useState(false);
     const [value, setValue] = useState(null);
     const [items, setItems] = useState([
@@ -25,22 +28,17 @@ const DeviceForm = ({onSaveDevice}) => {
     //to catch the last character of the input fields
     useEffect(() => {}, [inputDetails]);
 
-    let typeUpdater = (inputIdentifier, itemValue) => {
-        setInputDetails((prevState) => {
-            return { ...prevState, type: value };
-        });
-        console.log(inputDetails);
+    let saveDevice = async () => {
+        let deviceToAdd = { ...inputDetails, ...{ type: value } };
 
-        saveDevice(inputDetails);
-    };
+        onCreate(deviceToAdd);
 
-    let saveDevice = async (deviceDetails) => {
-        try {
-            let savedDeviceID = await createDevice(deviceDetails);
-            console.log(savedDeviceID);
-        } catch (error) {
-            console.log(error);
-        }
+        // try {
+        //     await createDevice(deviceToAdd);
+        //     navigation.goBack();
+        // } catch (error) {
+        //     console.log(error);
+        // }
     };
 
     return (
@@ -72,7 +70,7 @@ const DeviceForm = ({onSaveDevice}) => {
                 setItems={setItems}
                 placeholder="Pick device type"
             />
-            <Button onPress={typeUpdater}>Save device</Button>
+            <Button onPress={saveDevice}>Save device</Button>
         </View>
     );
 };

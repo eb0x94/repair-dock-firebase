@@ -12,13 +12,13 @@ const DeviceCard = ({ itemDetails, deleteItem }) => {
             <View style={styles.textContainer}>
                 <MaterialIcons
                     style={styles.icon}
-                    name={itemDetails.type}
+                    name={itemDetails.data.type}
                     size={62}
                     color="black"
                 />
                 <View style={styles.textView}>
-                    <Text style={styles.text}>{itemDetails.make}</Text>
-                    <Text style={styles.text}>{itemDetails.model}</Text>
+                    <Text style={styles.text}>{itemDetails.data.make}</Text>
+                    <Text style={styles.text}>{itemDetails.data.model}</Text>
                 </View>
             </View>
             <Button icon="delete" onPress={deleteHandler}>

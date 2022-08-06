@@ -4,7 +4,6 @@ import { StyleSheet } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
-
 // screens
 import Home from "./screens/Home";
 import UserProfile from "./screens/UserProfile";
@@ -12,6 +11,7 @@ import Devices from "./screens/Devices";
 import AddDevice from "./screens/AddDevice";
 
 const Stack = createNativeStackNavigator();
+
 
 export default function App() {
     return (
