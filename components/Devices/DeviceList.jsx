@@ -5,11 +5,8 @@ import Button from "../UI/Button";
 
 import DeviceCard from "./DeviceCard";
 
-const DeviceList = ({ devices, deviceHandlers }) => {
-    let content = (
-        <Text style={[styles.infoText]}>You don't have any devices.</Text>
-    );
-
+const DeviceList = ({ devices, deviceHandlers, isForRepair }) => {
+    const [isRepair, setIsRepair] = useState(isForRepair);
     const navigation = useNavigation();
 
     let navigationHandler = () => {
@@ -22,6 +19,24 @@ const DeviceList = ({ devices, deviceHandlers }) => {
         deviceHandlers.deleteDevice(deviceID);
     };
 
+    let button = (
+        <View style={styles.button}>
+            <Button onPress={navigationHandler} icon="add">
+                Add new device
+            </Button>
+        </View>
+    );
+
+    let content = (
+        <>
+            <Text style={[styles.infoText]}>
+                {isForRepair
+                    ? `You don't have any devices\nGo back and add your first device`
+                    : "You don't have any devices"}
+            </Text>
+        </>
+    );
+
     if (devices.length > 0) {
         content = (
             <FlatList
@@ -29,7 +44,11 @@ const DeviceList = ({ devices, deviceHandlers }) => {
                 data={devices}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
-                    <DeviceCard deleteItem={deleteDevice} itemDetails={item} />
+                    <DeviceCard
+                        deleteItem={deleteDevice}
+                        itemDetails={item}
+                        isRepair={isRepair}
+                    />
                 )}
             />
         );
@@ -37,11 +56,7 @@ const DeviceList = ({ devices, deviceHandlers }) => {
     return (
         <>
             {content}
-            <View style={styles.button}>
-                <Button onPress={navigationHandler} icon="add">
-                    Add new device
-                </Button>
-            </View>
+            {!isForRepair ? button : <View></View>}
         </>
     );
 };

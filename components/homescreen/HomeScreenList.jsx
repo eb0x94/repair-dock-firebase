@@ -14,6 +14,7 @@ const HomeScreenList = ({ homeItems }) => {
                 navigation.navigate("Devices");
                 break;
             case "bookRepair":
+                navigation.navigate("BookRepair");
                 break;
             case "historyRepair":
                 break;

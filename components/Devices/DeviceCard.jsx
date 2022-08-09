@@ -1,11 +1,32 @@
 import { StyleSheet, View, Text } from "react-native";
 import Button from "../UI/Button";
 import { MaterialIcons } from "@expo/vector-icons";
+import { useNavigation } from "@react-navigation/native";
 
-const DeviceCard = ({ itemDetails, deleteItem }) => {
+const DeviceCard = ({ itemDetails, deleteItem, isRepair }) => {
+    const navigation = useNavigation();
+
     let deleteHandler = () => {
         deleteItem(itemDetails.id);
     };
+
+    let repairHandler = () => {
+        navigation.navigate("SurveyScreen", { deviceDetails: itemDetails });
+    };
+
+    let button = (
+        <Button icon="delete" onPress={deleteHandler}>
+            Delete
+        </Button>
+    );
+
+    if (isRepair) {
+        button = (
+            <Button icon="post-add" onPress={repairHandler}>
+                Select device
+            </Button>
+        );
+    }
 
     return (
         <View style={styles.container}>
@@ -21,9 +42,7 @@ const DeviceCard = ({ itemDetails, deleteItem }) => {
                     <Text style={styles.text}>{itemDetails.data.model}</Text>
                 </View>
             </View>
-            <Button icon="delete" onPress={deleteHandler}>
-                Delete
-            </Button>
+            {button}
         </View>
     );
 };

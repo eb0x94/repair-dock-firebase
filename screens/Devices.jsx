@@ -2,7 +2,6 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DeviceList from "../components/Devices/DeviceList";
-import { DEVICES, DEVICES_EMPTY } from "../constants/homescreen/items";
 import { fetchDataTable, deleteItem, createEntry } from "../util/database";
 
 const Devices = () => {
@@ -27,7 +26,7 @@ const Devices = () => {
     }, [isModifying]);
 
     let createDeviceHandler = (deviceData) => {
-        createEntry("devices",deviceData);
+        createEntry("devices", deviceData);
         setIsModifying(true);
     };
 
@@ -41,7 +40,6 @@ const Devices = () => {
         } catch (error) {
             console.log(error);
         }
-        
     };
 
     let deviceHandlerObj = {
@@ -55,7 +53,13 @@ const Devices = () => {
         </View>
     );
 
-    return <DeviceList devices={devices} deviceHandlers={deviceHandlerObj} />;
+    return (
+        <DeviceList
+            devices={devices}
+            deviceHandlers={deviceHandlerObj}
+            isForRepair={false}
+        />
+    );
 };
 
 const styles = StyleSheet.create({
