@@ -35,7 +35,27 @@ const AuthScreenStack = () => {
 };
 
 const AuthenticatedScreenStack = () => {
+    const [isTryingToGetID, setIsTryingToGetID] = useState(true);
+    const [loggedUserId, setLoggedUserId] = useState("");
     const authCtx = useContext(AuthContext);
+    try {
+        let fetchToken = async () => {
+            let storeId = await AsyncStorage.getItem("userId");
+
+            if (storeId !== null) {
+                setLoggedUserId(storeId);
+            }
+            setIsTryingToGetID(false);
+        };
+        fetchToken();
+    } catch (error) {
+        console.log(error);
+    }
+
+    if (isTryingToGetID) {
+        return <LoadingOverlay message="Loading App" />;
+    }
+
     return (
         <Stack.Navigator>
             <Stack.Screen
@@ -52,10 +72,22 @@ const AuthenticatedScreenStack = () => {
                     ),
                 }}
             />
-            <Stack.Screen name="UserProfile" component={UserProfile} />
-            <Stack.Screen name="Devices" component={Devices} />
+            <Stack.Screen
+                name="UserProfile"
+                component={UserProfile}
+                initialParams={{ userId: loggedUserId }}
+            />
+            <Stack.Screen
+                name="Devices"
+                component={Devices}
+                initialParams={{ userId: loggedUserId }}
+            />
             <Stack.Screen name="AddDevice" component={AddDevice} />
-            <Stack.Screen name="BookRepair" component={RepairBook} />
+            <Stack.Screen
+                name="BookRepair"
+                component={RepairBook}
+                initialParams={{ userId: loggedUserId }}
+            />
             <Stack.Screen name="SurveyScreen" component={SurveyScreen} />
         </Stack.Navigator>
     );

@@ -1,18 +1,24 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DeviceList from "../components/Devices/DeviceList";
-import { fetchDataTable, deleteItem, createEntry } from "../util/database";
+import { AuthContext } from "../store/auth-context";
+import {
+    fetchDataTable,
+    deleteItem,
+    createEntry,
+    fetchUserDevices,
+} from "../util/database";
 
-const Devices = () => {
+const Devices = ({ route }) => {
     let [devices, setDevices] = useState([]);
     let [isMounted, setIsMounted] = useState(true);
     let [isModifying, setIsModifying] = useState(false);
-
+    let { userId } = route.params;
     useEffect(() => {
         setIsMounted(true);
         let getDevices = async () => {
-            let fetchedDevices = await fetchDataTable("devices");
+            let fetchedDevices = await fetchUserDevices(userId);
             if (isMounted) {
                 setDevices(fetchedDevices);
             }
@@ -26,6 +32,7 @@ const Devices = () => {
     }, [isModifying]);
 
     let createDeviceHandler = (deviceData) => {
+        deviceData.ownerId = userId;
         createEntry("devices", deviceData);
         setIsModifying(true);
     };

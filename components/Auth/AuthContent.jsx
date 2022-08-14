@@ -33,28 +33,18 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
         email.trim();
         password.trim();
 
-        console.log(firstName);
-        console.log(lastName);
-        console.log(email);
-        console.log(password);
-
         const isFirstNameValid = firstName.length > 0;
         const isLastNameValid = lastName.length > 0;
         const isValidEmail = email.includes("@");
         const isPasswordValid = password.length > 6;
         const arePasswordsEqual = password === confirmPassword;
 
-        if(!isLogin)
-
-        console.log(isFirstNameValid);
-        console.log(isLastNameValid);
-
         if (
+            (!isLogin && !arePasswordsEqual) ||
             !isValidEmail ||
             !isPasswordValid ||
-            !isFirstNameValid ||
-            !isLastNameValid ||
-            (!isLogin && !arePasswordsEqual)
+            (!isLogin && !isFirstNameValid) ||
+            (!isLogin && !isLastNameValid)
         ) {
             Alert.alert(
                 "Oops...Wrong info entered",
@@ -71,7 +61,7 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
             return;
         }
 
-        onAuthenticate({ email, password });
+        onAuthenticate(credentials);
         console.log("valid");
     };
 

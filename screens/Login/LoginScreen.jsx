@@ -10,14 +10,9 @@ const LoginScreen = () => {
 
     let loginHandler = async ({ email, password }) => {
         setIsAuthenticating(true);
-        if (true) {
-            console.log(email);
-            console.log(password);
-            return
-        }
         try {
-            const token = await loginUser(email, password);
-            authCtx.authenticate(token);
+            const returnedData = await loginUser(email, password);
+            authCtx.authenticate(returnedData.token, returnedData.userId);
         } catch (error) {
             Alert.alert(
                 "Athentication Failed",

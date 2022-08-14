@@ -1,11 +1,31 @@
+import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
+import AccountDetails from "../components/UserProfile/AccountDetails";
+import { AuthContext } from "../store/auth-context";
 
-const UserProfile = () => {
-    return (
-        <View style={styles.container}>
-            <Text>This is user profile</Text>
-        </View>
-    );
+import { fetchDataWithID } from "../util/database";
+
+const UserProfile = ({ route }) => {
+    const { userId } = route.params;
+    const [userInfo, setUserInfo] = useState({});
+
+    useEffect(() => {
+        try {
+            let fetchUserDetails = async () => {
+                let userDetails = await fetchDataWithID(userId, "users");
+
+                if (userDetails) {
+                    setUserInfo(userDetails);
+                }
+            };
+
+            fetchUserDetails();
+        } catch (error) {
+            console.log(error);
+        }
+    }, []);
+
+    return <AccountDetails profileData={userInfo} />;
 };
 
 const styles = StyleSheet.create({

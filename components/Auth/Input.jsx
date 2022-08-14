@@ -31,19 +31,23 @@ const styles = StyleSheet.create({
         marginVertical: 8,
     },
     label: {
-        color: "black",
+        color: "white",
         marginBottom: 4,
     },
     labelInvalid: {
-        color: "red",
+        color: "pink",
     },
     input: {
         paddingVertical: 8,
         paddingHorizontal: 6,
         borderRadius: 4,
         fontSize: 16,
+        backgroundColor: "white",
+        color: "black",
     },
-    inputInvalid: {},
+    inputInvalid: {
+        backgroundColor: "pink",
+    },
 });
 
 export default Input;

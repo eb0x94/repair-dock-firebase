@@ -4,7 +4,6 @@ import DropDownPicker from "react-native-dropdown-picker";
 import Button from "../UI/Button";
 import { useNavigation } from "@react-navigation/native";
 //db
-import { createDevice } from "../../util/database";
 
 const DeviceForm = ({ onCreate }) => {
     const navigation = useNavigation();
@@ -32,13 +31,6 @@ const DeviceForm = ({ onCreate }) => {
         let deviceToAdd = { ...inputDetails, ...{ type: value } };
 
         onCreate(deviceToAdd);
-
-        // try {
-        //     await createDevice(deviceToAdd);
-        //     navigation.goBack();
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     return (

@@ -42,7 +42,7 @@ const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
         onSubmit({
             firstName: enteredFirstName,
             lastName: enteredLastName,
-            email: enteredEmail,
+            email: enteredEmail.toLowerCase(),
             password: enteredPassword,
             confirmPassword: enteredConfirmPassword,
         });

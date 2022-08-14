@@ -8,14 +8,11 @@ const RepairSurvey = ({ device }) => {
         selected: null,
         data: ["selected", "not selected"],
     });
+    console.log(device);
 
     return (
         <>
             <View style={styles.container}>
-                {/* <SurveyCard>
-                    <MaterialIcons name="add-circle-outline" size={44} />
-                    <Text>Card Text</Text>
-                </SurveyCard>
                 <SurveyCard>
                     <MaterialIcons name="add-circle-outline" size={44} />
                     <Text>Card Text</Text>
@@ -23,7 +20,11 @@ const RepairSurvey = ({ device }) => {
                 <SurveyCard>
                     <MaterialIcons name="add-circle-outline" size={44} />
                     <Text>Card Text</Text>
-                </SurveyCard> */}
+                </SurveyCard>
+                <SurveyCard>
+                    <MaterialIcons name="add-circle-outline" size={44} />
+                    <Text>Card Text</Text>
+                </SurveyCard>
             </View>
         </>
     );
