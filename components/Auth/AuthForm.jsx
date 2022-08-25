@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import Input from "./Input";
 import Button from "../UI/Button";
+import FlatButton from "../UI/FlatButton";
 
 const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
     const [enteredFirstName, setEnteredFirstName] = useState("");
@@ -50,6 +51,12 @@ const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
 
     return (
         <View>
+            {isLogin && (
+                <Image
+                    style={styles.loginImage}
+                    source={require("../../assets/images/repair-dock-login.png")}
+                />
+            )}
             <View>
                 {!isLogin && (
                     <Input
@@ -99,6 +106,11 @@ const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
                     />
                 )}
             </View>
+            <View>
+                <FlatButton>
+                    Forgotten password?
+                </FlatButton>
+            </View>
             <View style={styles.buttons}>
                 <Button onPress={submitHandler}>
                     {isLogin ? "Log in" : "Sign Up"}
@@ -111,6 +123,11 @@ const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
 const styles = StyleSheet.create({
     buttons: {
         marginTop: 12,
+    },
+    loginImage: {
+        height: 100,
+        width: "100%",
+        borderRadius: 6,
     },
 });
 

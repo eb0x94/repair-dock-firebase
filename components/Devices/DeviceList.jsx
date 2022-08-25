@@ -1,12 +1,11 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { FlatList, StyleSheet, View, Text } from "react-native";
+import { FlatList, StyleSheet, View, Text, Alert } from "react-native";
 import Button from "../UI/Button";
 
 import DeviceCard from "./DeviceCard";
 
 const DeviceList = ({ devices, deviceHandlers, isForRepair }) => {
-    const [isRepair, setIsRepair] = useState(isForRepair);
     const navigation = useNavigation();
 
     let navigationHandler = () => {
@@ -16,7 +15,15 @@ const DeviceList = ({ devices, deviceHandlers, isForRepair }) => {
     };
 
     let deleteDevice = (deviceID) => {
-        deviceHandlers.deleteDevice(deviceID);
+        Alert.alert("Are you sure?", "You are about to delete this device.", [
+            { text: "No", style: "cancel" },
+            {
+                text: "Yes",
+                onPress: () => {
+                    deviceHandlers.deleteDevice(deviceID);
+                },
+            },
+        ]);
     };
 
     let button = (
@@ -47,12 +54,13 @@ const DeviceList = ({ devices, deviceHandlers, isForRepair }) => {
                     <DeviceCard
                         deleteItem={deleteDevice}
                         itemDetails={item}
-                        isRepair={isRepair}
+                        isRepair={isForRepair}
                     />
                 )}
             />
         );
     }
+
     return (
         <>
             {content}

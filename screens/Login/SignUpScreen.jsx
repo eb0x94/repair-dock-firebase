@@ -4,7 +4,7 @@ import AuthContent from "../../components/Auth/AuthContent";
 import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import { AuthContext } from "../../store/auth-context";
 import { createUser } from "../../util/auth";
-import { createEntry, createDBUser } from "../../util/database";
+import { createDBUser } from "../../util/database";
 
 const SignUpScreen = () => {
     let [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -19,11 +19,9 @@ const SignUpScreen = () => {
                 fName: firstName,
                 lName: lastName,
                 email: email,
-                phoneNumber: "",
-                address: "",
-                devices: new Array(),
-                tickets: new Array(),
-                type: "",
+                phoneNumber: "No phone number",
+                address: "No address",
+                isAdmin: false,
             };
 
             const dbId = await createDBUser(

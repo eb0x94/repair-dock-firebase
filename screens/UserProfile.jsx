@@ -1,7 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import AccountDetails from "../components/UserProfile/AccountDetails";
-import { AuthContext } from "../store/auth-context";
 
 import { fetchDataWithID } from "../util/database";
 
@@ -10,11 +9,12 @@ const UserProfile = ({ route }) => {
     const [userInfo, setUserInfo] = useState({});
 
     useEffect(() => {
+        let isCancelled = false;
         try {
             let fetchUserDetails = async () => {
                 let userDetails = await fetchDataWithID(userId, "users");
 
-                if (userDetails) {
+                if (userDetails && !isCancelled) {
                     setUserInfo(userDetails);
                 }
             };
@@ -23,7 +23,11 @@ const UserProfile = ({ route }) => {
         } catch (error) {
             console.log(error);
         }
-    }, []);
+
+        return () => {
+            isCancelled = true;
+        };
+    }, [userInfo]);
 
     return <AccountDetails profileData={userInfo} />;
 };

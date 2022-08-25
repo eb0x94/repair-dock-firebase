@@ -79,6 +79,21 @@ export const fetchUserDevices = async (userId) => {
     }
     return fetchedData;
 };
+export const fetchShops = async () => {
+    const response = await axios.get(DB_URL + "/users.json");
+    let fetchedData = [];
+
+    for (let key in response.data) {
+        if (response.data[key].isAdmin) {
+            let resultItem = {
+                shopId: key,
+                data: response.data[key],
+            };
+            fetchedData.push(resultItem);
+        }
+    }
+    return fetchedData;
+};
 
 export const fetchDataWithID = async (id, location) => {
     const response = await axios.get(DB_URL + `/${location}/${id}.json`);

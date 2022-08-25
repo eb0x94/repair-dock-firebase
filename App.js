@@ -1,8 +1,9 @@
-import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text } from "react-native";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+
+import { StatusBar } from "expo-status-bar";
+import { StyleSheet } from "react-native";
 
 // screens
 import Home from "./screens/Home";
@@ -15,19 +16,22 @@ import LoginScreen from "./screens/Login/LoginScreen";
 import SignUpScreen from "./screens/Login/SignUpScreen";
 import { useContext, useEffect, useState } from "react";
 import AuthContextProvider, { AuthContext } from "./store/auth-context";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import * as SplashScreen from "expo-splash-screen";
-import AppLoading from "expo-app-loading";
 import LoadingOverlay from "./components/UI/LoadingOverlay";
 import LogoutIcon from "./components/UI/LogoutIcon";
-
-// SplashScreen.preventAutoHideAsync();
+import UpdateUserProfile from "./screens/UpdateUserProfile";
+import SelectProvider from "./screens/SelectProvider";
 
 const Stack = createNativeStackNavigator();
 
 const AuthScreenStack = () => {
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: "#1068D8" },
+                headerTintColor: "white",
+                contentStyle: { backgroundColor: "#3f72af" },
+            }}
+        >
             <Stack.Screen name="Login" component={LoginScreen} />
             <Stack.Screen name="Signup" component={SignUpScreen} />
         </Stack.Navigator>
@@ -57,16 +61,22 @@ const AuthenticatedScreenStack = () => {
     }
 
     return (
-        <Stack.Navigator>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: { backgroundColor: "#1068D8" },
+                headerTintColor: "white",
+                contentStyle: { backgroundColor: "#3f72af" },
+            }}
+        >
             <Stack.Screen
                 name="Home"
                 component={Home}
                 options={{
-                    headerRight: () => (
+                    headerRight: ({ tintColor }) => (
                         <LogoutIcon
                             icon="logout"
-                            size={24}
-                            color="black"
+                            size={28}
+                            color={tintColor}
                             onPress={authCtx.logout}
                         />
                     ),
@@ -89,6 +99,11 @@ const AuthenticatedScreenStack = () => {
                 initialParams={{ userId: loggedUserId }}
             />
             <Stack.Screen name="SurveyScreen" component={SurveyScreen} />
+            <Stack.Screen
+                name="UpdateUserProfile"
+                component={UpdateUserProfile}
+            />
+            <Stack.Screen name="SelectProvider" component={SelectProvider} />
         </Stack.Navigator>
     );
 };
@@ -110,8 +125,8 @@ const Root = () => {
         let fetchToken = async () => {
             let storedToken = await AsyncStorage.getItem("token");
 
-            if (storedToken) {
-                authCtx.authenticate(storedToken);
+            if (storedToken !== null) {
+                authCtx.authenticate(storedToken, 0);
             }
             setIsTryingToLogin(false);
         };
@@ -127,7 +142,7 @@ const Root = () => {
 export default function App() {
     return (
         <>
-            <StatusBar style="auto" />
+            <StatusBar style="light" />
             <AuthContextProvider>
                 <Root />
             </AuthContextProvider>

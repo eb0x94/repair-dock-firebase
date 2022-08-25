@@ -1,6 +1,6 @@
 import { StyleSheet } from "react-native";
 import HomeScreenList from '../components/homescreen/HomeScreenList'
-import { MENU_ITEMS } from "../constants/homescreen/items";
+import { MENU_ITEMS, MENU_ITEMS_ADMIN } from "../constants/homescreen/items";
 
 const Home = () => {
     return <HomeScreenList style={styles.container} homeItems={MENU_ITEMS} />;

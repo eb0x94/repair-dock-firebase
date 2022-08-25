@@ -3,6 +3,7 @@ import LoadingOverlay from "../../components/UI/LoadingOverlay";
 import { useState, useContext } from "react";
 import { AuthContext } from "../../store/auth-context";
 import { loginUser } from "../../util/auth";
+import { Alert } from "react-native";
 
 const LoginScreen = () => {
     let [isAuthenticating, setIsAuthenticating] = useState(false);
@@ -14,10 +15,26 @@ const LoginScreen = () => {
             const returnedData = await loginUser(email, password);
             authCtx.authenticate(returnedData.token, returnedData.userId);
         } catch (error) {
-            Alert.alert(
-                "Athentication Failed",
-                "Could not log you in. Please, try again later!"
-            );
+            console.log(error.response.data);
+            if (error.response.data.error.message === "EMAIL_NOT_FOUND") {
+                Alert.alert(
+                    "Invalid credentials",
+                    "Account does't exists. Please, create an account."
+                );
+            }
+            if (error.response.data.error.message === "INVALID_PASSWORD") {
+                Alert.alert(
+                    "Invalid password",
+                    "Please, enter correct password"
+                );
+            }
+            if (error.response.data.error.message === "INVALID_EMAIL") {
+                Alert.alert(
+                    "Invalid email",
+                    "Please, enter correct email."
+                );
+            }
+
             setIsAuthenticating(false);
         }
     };

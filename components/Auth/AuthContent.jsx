@@ -1,6 +1,6 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Alert, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View, Text } from "react-native";
 import FlatButton from "../UI/FlatButton";
 
 import AuthForm from "./AuthForm";
@@ -57,13 +57,17 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
                 password: !isPasswordValid,
                 confirmPassword: !isPasswordValid || !arePasswordsEqual,
             });
-            console.log("invalid");
             return;
         }
 
         onAuthenticate(credentials);
-        console.log("valid");
     };
+
+    let createLoginText = (
+        <Text style={styles.createLoginText}>
+            {isLogin ? "New to RepairDock?" : "Already have an account?"}
+        </Text>
+    );
 
     return (
         <View style={styles.authContent}>
@@ -73,8 +77,9 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
                 invalidCredentials={invalidCredentials}
             />
             <View style={styles.buttons}>
+                {createLoginText}
                 <FlatButton onPress={switchAuthModeHandler}>
-                    {isLogin ? "Create new user" : "Log in instead"}
+                    {isLogin ? "Create an account" : "Log in instead"}
                 </FlatButton>
             </View>
         </View>
@@ -96,6 +101,10 @@ const styles = StyleSheet.create({
         shadowOffset: { width: 1, height: 1 },
         shadowOpacity: 0.35,
         shadowRadius: 4,
+    },
+    createLoginText: {
+        textAlign: "center",
+        color: "white",
     },
 });
 

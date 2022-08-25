@@ -53,16 +53,19 @@ const DeviceForm = ({ onCreate }) => {
                     onChangeText={inputChangeHandler.bind(this, "model")}
                 />
             </View>
-            <DropDownPicker
-                open={open}
-                value={value}
-                items={items}
-                setOpen={setOpen}
-                setValue={setValue}
-                setItems={setItems}
-                placeholder="Pick device type"
-            />
-            <Button onPress={saveDevice}>Save device</Button>
+            <View style={styles.inputView}>
+                <Text style={styles.inputText}>Device Type:</Text>
+                <DropDownPicker
+                    open={open}
+                    value={value}
+                    items={items}
+                    setOpen={setOpen}
+                    setValue={setValue}
+                    setItems={setItems}
+                    placeholder="Pick device type"
+                />
+                <Button onPress={saveDevice}>Save device</Button>
+            </View>
         </View>
     );
 };

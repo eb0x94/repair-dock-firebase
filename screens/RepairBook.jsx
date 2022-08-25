@@ -27,7 +27,7 @@ const RepairBook = ({ route }) => {
         };
     }, []);
 
-    return <DeviceList devices={devices} isForRepair={true} />;
+    return <DeviceList devices={devices} isForRepair />;
 };
 
 const styles = StyleSheet.create({});

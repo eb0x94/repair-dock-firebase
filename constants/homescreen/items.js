@@ -1,4 +1,4 @@
-import { Device } from "../../models/device";
+
 import { MenuItem } from "../../models/homeInfo";
 
 export const MENU_ITEMS = [
@@ -25,6 +25,13 @@ export const MENU_ITEMS = [
     ),
     new MenuItem(
         3,
+        "Ongoing repairs",
+        "See open tickets",
+        "repeat",
+        "currentRepairs"
+    ),
+    new MenuItem(
+        4,
         "Repair History",
         "View previous repairs",
         "history",
@@ -32,11 +39,40 @@ export const MENU_ITEMS = [
     ),
 ];
 
-export const DEVICES = [
-    new Device(0, "smartphone", { brand: "Apple", model: "iPhone 13" }),
-    new Device(1, "smartphone", { brand: "Samsung", model: "Galaxy Note 9" }),
-    new Device(2, "tablet", { brand: "Apple", model: "iPad Pro" }),
-    new Device(3, "laptop", { brand: "Apple", model: "MacBook Pro" }),
-    new Device(4, "laptop", { brand: "Lenovo", model: "Yoga" }),
+export const MENU_ITEMS_ADMIN = [
+    new MenuItem(
+        0,
+        "Your shop",
+        "Change shop details",
+        "store",
+        "profile"
+    ),
+    new MenuItem(
+        1,
+        "Your tickets",
+        "See opened repair tickets",
+        "devices",
+        "devices"
+    ),
+    new MenuItem(
+        2,
+        "Closed Tickets",
+        "Complted ticket details",
+        "history",
+        "bookRepair"
+    ),
+    new MenuItem(
+        3,
+        "Ongoing repairs",
+        "See open tickets",
+        "repeat",
+        "currentRepairs"
+    ),
+    new MenuItem(
+        4,
+        "Repair History",
+        "View previous repairs",
+        "history",
+        "historyRepair"
+    ),
 ];
-export const DEVICES_EMPTY = [];

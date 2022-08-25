@@ -17,6 +17,9 @@ const AuthContextProvider = ({ children }) => {
         setAuthToken(token);
         setAuthUserId(userId);
         AsyncStorage.setItem("token", token);
+        if (userId === 0) {
+            return;
+        }
         AsyncStorage.setItem("userId", userId);
     };
 

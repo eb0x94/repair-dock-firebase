@@ -1,25 +1,29 @@
 import { useState } from "react";
 import { Pressable, StyleSheet, TouchableOpacity } from "react-native";
 
-const SurveyCard = ({ children, onPress, description }) => {
+const SurveyCard = ({ children, onSelect, description }) => {
     let [isSelected, setIsSelected] = useState(false);
 
-    let selectHanlder = () => {
+    let selectHandler = () => {
         if (isSelected) {
+            onSelect(!isSelected);
             setIsSelected(false);
             return;
         }
+        onSelect(!isSelected);
         setIsSelected(true);
     };
+
+    // console.log(isSelected ? "selected" : "not selected");
 
     return (
         <Pressable
             style={({ pressed }) => [
                 styles.cardContainer,
                 pressed && styles.pressed,
-                isSelected && { backgroundColor: "#3172af" },
+                isSelected && { backgroundColor: "#315a89" },
             ]}
-            onPress={selectHanlder}
+            onPress={selectHandler}
         >
             {children}
         </Pressable>
@@ -28,12 +32,11 @@ const SurveyCard = ({ children, onPress, description }) => {
 
 const styles = StyleSheet.create({
     pressed: {
-        opacity: 0.5,
-        backgroundColor: "#315a89",
+        opacity: 0.7,
     },
     cardContainer: {
-        height: 100,
-        width: 120,
+        height: 150,
+        width: "40%",
         backgroundColor: "#82a6d2",
         borderRadius: 10,
         justifyContent: "center",
