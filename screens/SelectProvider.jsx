@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
-import { Alert, FlatList, StyleSheet, Text, View } from "react-native";
+import { useEffect, useState } from "react";
+import { Alert, FlatList, StyleSheet } from "react-native";
 import ShopCard from "../components/repair/ShopCard";
 import LoadingOverlay from "../components/UI/LoadingOverlay";
 import { fetchShops, createEntry } from "../util/database";
@@ -10,25 +10,27 @@ const SelectProvider = ({ route }) => {
     let device = route.params.device;
     let repair = route.params.details;
 
-    let [repairShops, setRepairShops] = useState();
+    let [repairShops, setRepairShops] = useState({});
     let [isFetching, setIsFetching] = useState(false);
 
     useEffect(() => {
-        setIsFetching(true);
-        try {
-            let getAdmins = async () => {
-                let returnedShops = await fetchShops("users");
+        setTimeout(() => {
+            setIsFetching(true);
+            try {
+                let getShops = async () => {
+                    let returnedShops = await fetchShops();
 
-                if (returnedShops && !isFetching) {
-                    setRepairShops(returnedShops);
-                }
-            };
+                    if (returnedShops && !isFetching) {
+                        setRepairShops(returnedShops);
+                    }
+                };
 
-            getAdmins();
-        } catch (error) {
-            console.log(error.response);
-            setIsFetching(false);
-        }
+                getShops();
+            } catch (error) {
+                console.log(error.response);
+                setIsFetching(false);
+            }
+        }, 1500);
 
         return () => {
             setIsFetching(false);
@@ -37,14 +39,14 @@ const SelectProvider = ({ route }) => {
 
     let createTicket = (shopID) => {
         let ticketDetails = {
-            status: "new",
+            status: "created",
             device: device.id,
             users: {
                 userId: device.data.ownerId,
                 shopId: shopID,
             },
             details: {
-                comments: [repair.additionalComment],
+                comments: [{ isUser: true, commentText: repair.additionalComment }],
                 survey: repair.surveyDetails,
             },
             date: new Date().toISOString().slice(0, 10),

@@ -19,7 +19,7 @@ const LoginScreen = () => {
             if (error.response.data.error.message === "EMAIL_NOT_FOUND") {
                 Alert.alert(
                     "Invalid credentials",
-                    "Account does't exists. Please, create an account."
+                    "Account doesn't exists. Please, create an account."
                 );
             }
             if (error.response.data.error.message === "INVALID_PASSWORD") {
@@ -29,10 +29,7 @@ const LoginScreen = () => {
                 );
             }
             if (error.response.data.error.message === "INVALID_EMAIL") {
-                Alert.alert(
-                    "Invalid email",
-                    "Please, enter correct email."
-                );
+                Alert.alert("Invalid email", "Please, enter correct email.");
             }
 
             setIsAuthenticating(false);

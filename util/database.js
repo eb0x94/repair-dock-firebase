@@ -4,19 +4,6 @@ const DB_URL =
     "https://repair-dock-default-rtdb.europe-west1.firebasedatabase.app";
 
 // CREATE
-// export const createDevice = async (deviceData) => {
-//     const response = await axios.post(DB_URL + "/devices.json", deviceData);
-//     let deviceId = response.data.name;
-//     return deviceId;
-// };
-// export const createUser = async (userData) => {
-//     const response = await axios.post(DB_URL + "/users.json", userData);
-//     let userId = response.data.name;
-//     return userId;
-// };
-// export const createTicket = async (ticketData) => {
-//     const response = await axios.post(DB_URL + "/tickets.json", ticketData);
-// };
 
 export const createEntry = async (location, itemData) => {
     const response = await axios.post(DB_URL + `/${location}.json`, itemData);
@@ -33,21 +20,6 @@ export const createDBUser = async (location, userId, itemData) => {
 };
 
 //READ
-// export const fetchDevices = async () => {
-//     const response = await axios.get(DB_URL + "/devices.json");
-//     let fetchedData = [];
-
-//     for (let key in response.data) {
-//         let deviceObj = {
-//             id: key,
-//             data: response.data[key],
-//         };
-
-//         fetchedData.push(deviceObj);
-//     }
-
-//     return fetchedData;
-// };
 
 export const fetchDataTable = async (location) => {
     const response = await axios.get(DB_URL + `/${location}.json`);
@@ -95,6 +67,26 @@ export const fetchShops = async () => {
     return fetchedData;
 };
 
+export const fetchUserTickets = async (id) => {
+    const response = await axios.get(DB_URL + `/tickets.json`);
+    let fetchedData = [];
+
+    for (const key in response.data) {
+        if (Object.hasOwnProperty.call(response.data, key)) {
+            const element = response.data[key];
+            if (element.users.userId === id || element.users.shopId === id) {
+                let elementToAdd = {
+                    id: key,
+                    ticket: element,
+                };
+                fetchedData.push(elementToAdd);
+            }
+        }
+    }
+
+    return fetchedData;
+};
+
 export const fetchDataWithID = async (id, location) => {
     const response = await axios.get(DB_URL + `/${location}/${id}.json`);
 
@@ -113,7 +105,7 @@ export const deleteItem = async (id, location) => {
 
 export const updateItem = async (id, location, updateData) => {
     const response = await axios.put(
-        DB_URL + `/${location}/${id}}`,
+        DB_URL + `/${location}/${id}.json`,
         updateData
     );
     return response;

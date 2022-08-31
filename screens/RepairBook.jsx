@@ -1,7 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DeviceList from "../components/Devices/DeviceList";
-import { AuthContext } from "../store/auth-context";
 
 //db import
 import { fetchUserDevices } from "../util/database";
@@ -10,7 +9,6 @@ const RepairBook = ({ route }) => {
     const { userId } = route.params;
     const [devices, setDevices] = useState([]);
     const [isMounted, setIsMounted] = useState(true);
-    const authCtx = useContext(AuthContext);
 
     useEffect(() => {
         setIsMounted(true);

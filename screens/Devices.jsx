@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import DeviceList from "../components/Devices/DeviceList";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
 import { deleteItem, createEntry, fetchUserDevices } from "../util/database";
 
 const Devices = ({ route }) => {
@@ -19,12 +20,12 @@ const Devices = ({ route }) => {
         };
 
         getDevices();
+
         return () => {
             setIsMounted(false);
             setIsModifying(false);
         };
     }, [isModifying]);
-    
 
     let createDeviceHandler = (deviceData) => {
         deviceData.ownerId = userId;
@@ -55,18 +56,10 @@ const Devices = ({ route }) => {
         </View>
     );
 
-    return (
-        <DeviceList
-            devices={devices}
-            deviceHandlers={deviceHandlerObj}
-        />
-    );
+    return <DeviceList devices={devices} deviceHandlers={deviceHandlerObj} />;
 };
 
 const styles = StyleSheet.create({
-    container: {
-        backgroundColor: "red",
-    },
     loadingContainer: {
         alignItems: "center",
         flex: 1,

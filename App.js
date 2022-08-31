@@ -20,6 +20,8 @@ import LoadingOverlay from "./components/UI/LoadingOverlay";
 import LogoutIcon from "./components/UI/LogoutIcon";
 import UpdateUserProfile from "./screens/UpdateUserProfile";
 import SelectProvider from "./screens/SelectProvider";
+import OngoingTickets from "./screens/OngoingTickets";
+import RepairHistory from "./screens/RepairHistory";
 
 const Stack = createNativeStackNavigator();
 
@@ -40,12 +42,11 @@ const AuthScreenStack = () => {
 
 const AuthenticatedScreenStack = () => {
     const [isTryingToGetID, setIsTryingToGetID] = useState(true);
-    const [loggedUserId, setLoggedUserId] = useState("");
     const authCtx = useContext(AuthContext);
+    const [loggedUserId, setLoggedUserId] = useState("");
     try {
         let fetchToken = async () => {
             let storeId = await AsyncStorage.getItem("userId");
-
             if (storeId !== null) {
                 setLoggedUserId(storeId);
             }
@@ -81,6 +82,7 @@ const AuthenticatedScreenStack = () => {
                         />
                     ),
                 }}
+                initialParams={{ userId: loggedUserId }}
             />
             <Stack.Screen
                 name="UserProfile"
@@ -104,6 +106,12 @@ const AuthenticatedScreenStack = () => {
                 component={UpdateUserProfile}
             />
             <Stack.Screen name="SelectProvider" component={SelectProvider} />
+            <Stack.Screen
+                name="OngoingTickets"
+                component={OngoingTickets}
+                initialParams={{ userId: loggedUserId }}
+            />
+            <Stack.Screen name="RepairHistory" component={RepairHistory} />
         </Stack.Navigator>
     );
 };
@@ -124,9 +132,10 @@ const Root = () => {
     useEffect(() => {
         let fetchToken = async () => {
             let storedToken = await AsyncStorage.getItem("token");
+            let storedId = await AsyncStorage.getItem("userId");
 
-            if (storedToken !== null) {
-                authCtx.authenticate(storedToken, 0);
+            if (storedToken !== null && storedId !== null) {
+                authCtx.authenticate(storedToken, storedId);
             }
             setIsTryingToLogin(false);
         };

@@ -52,27 +52,13 @@ export const MENU_ITEMS_ADMIN = [
         "Your tickets",
         "See opened repair tickets",
         "devices",
-        "devices"
+        "currentRepairsAdmin"
     ),
     new MenuItem(
         2,
         "Closed Tickets",
-        "Complted ticket details",
+        "Completed ticket details",
         "history",
-        "bookRepair"
-    ),
-    new MenuItem(
-        3,
-        "Ongoing repairs",
-        "See open tickets",
-        "repeat",
-        "currentRepairs"
-    ),
-    new MenuItem(
-        4,
-        "Repair History",
-        "View previous repairs",
-        "history",
-        "historyRepair"
+        "historyRepairsAdmin"
     ),
 ];

@@ -1,5 +1,14 @@
 import { useEffect, useState } from "react";
-import { StyleSheet, Text, View, TextInput, Alert } from "react-native";
+import {
+    StyleSheet,
+    Text,
+    View,
+    TextInput,
+    Alert,
+    KeyboardAvoidingView,
+    Platform,
+    Image,
+} from "react-native";
 import SurveyCard from "./SurveyCard";
 import { MaterialIcons } from "@expo/vector-icons";
 import Button from "../UI/Button";
@@ -21,9 +30,7 @@ const RepairSurvey = ({ device }) => {
     useEffect(() => {}, [additionalComment]);
 
     let onNextHandler = () => {
-        if (
-            additionalComment.length < 15
-        ) {
+        if (additionalComment.length < 15) {
             Alert.alert(
                 "Sorry, too short story",
                 "Please, provide more details about the problem. At least 15 characters."
@@ -47,41 +54,63 @@ const RepairSurvey = ({ device }) => {
     };
 
     return (
-        <>
+        <KeyboardAvoidingView
+            style={{ flex: 1 }}
+            behavior={"position"}
+            keyboardVerticalOffset={Platform.OS === "ios" ? 60 : 40}
+        >
             <View>
                 <View style={styles.container}>
                     <SurveyCard
                         onSelect={onSelectCard.bind(this, "brokenScreen")}
                     >
-                        <MaterialIcons name="add-circle-outline" size={44} />
+                        <Image
+                            style={styles.cardImage}
+                            source={require("../../assets/broken.png")}
+                        />
                         <Text>Screen replacement</Text>
                     </SurveyCard>
                     <SurveyCard
                         onSelect={onSelectCard.bind(this, "batteryReplacement")}
                     >
-                        <MaterialIcons name="add-circle-outline" size={44} />
+                        <Image
+                            style={styles.cardImage}
+                            source={require("../../assets/battery.png")}
+                        />
                         <Text>Battery replacement</Text>
                     </SurveyCard>
                     <SurveyCard
                         onSelect={onSelectCard.bind(this, "notCharging")}
                     >
-                        <MaterialIcons name="add-circle-outline" size={44} />
+                        <Image
+                            style={styles.cardImage}
+                            source={require("../../assets/charging.png")}
+                        />
                         <Text>Not charging</Text>
                     </SurveyCard>
                     <SurveyCard
                         onSelect={onSelectCard.bind(this, "notTurningOn")}
                     >
-                        <MaterialIcons name="add-circle-outline" size={44} />
+                        <Image
+                            style={styles.cardImage}
+                            source={require("../../assets/tablet.png")}
+                        />
                         <Text>Not turning on</Text>
                     </SurveyCard>
                     <SurveyCard onSelect={onSelectCard.bind(this, "slow")}>
-                        <MaterialIcons name="add-circle-outline" size={44} />
+                        <Image
+                            style={styles.cardImage}
+                            source={require("../../assets/speed.png")}
+                        />
                         <Text>Slow</Text>
                     </SurveyCard>
                     <SurveyCard
                         onSelect={onSelectCard.bind(this, "lowStorage")}
                     >
-                        <MaterialIcons name="add-circle-outline" size={44} />
+                        <Image
+                            style={styles.cardImage}
+                            source={require("../../assets/storage.png")}
+                        />
                         <Text>Low storage</Text>
                     </SurveyCard>
                 </View>
@@ -89,7 +118,7 @@ const RepairSurvey = ({ device }) => {
                     <TextInput
                         value={additionalComment}
                         onChangeText={commentsHandler}
-                        placeholder="Additional comments"
+                        placeholder="Add some details"
                     />
                 </View>
                 <View style={styles.buttonView}>
@@ -98,7 +127,7 @@ const RepairSurvey = ({ device }) => {
                     </Button>
                 </View>
             </View>
-        </>
+        </KeyboardAvoidingView>
     );
 };
 
@@ -110,9 +139,9 @@ const styles = StyleSheet.create({
         justifyContent: "space-evenly",
     },
     additionalComments: {
-        paddingTop:10,
+        paddingTop: 10,
         borderWidth: 1,
-        borderRadius: 6,
+        borderRadius: 20,
         width: "90%",
         height: "15%",
         alignSelf: "center",
@@ -123,6 +152,11 @@ const styles = StyleSheet.create({
     buttonView: {
         marginVertical: 5,
         marginHorizontal: 15,
+    },
+    cardImage: {
+        height: 50,
+        width: 50,
+        marginBottom: 15,
     },
 });
 

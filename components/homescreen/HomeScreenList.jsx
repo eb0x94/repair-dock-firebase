@@ -16,7 +16,17 @@ const HomeScreenList = ({ homeItems }) => {
             case "bookRepair":
                 navigation.navigate("BookRepair");
                 break;
+            case "currentRepairs":
+                navigation.navigate("OngoingTickets", { isAdmin: false });
+                break;
+            case "currentRepairsAdmin":
+                navigation.navigate("OngoingTickets", { isAdmin: true });
+                break;
             case "historyRepair":
+                navigation.navigate("RepairHistory", { isAdmin: false });
+                break;
+            case "historyRepairAdmin":
+                navigation.navigate("RepairHistory", { isAdmin: true });
                 break;
             default:
         }

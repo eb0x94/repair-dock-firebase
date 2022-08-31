@@ -1,6 +1,12 @@
 import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
-import { Alert, StyleSheet, View, Text } from "react-native";
+import {
+    Alert,
+    StyleSheet,
+    View,
+    Text,
+    KeyboardAvoidingView,
+} from "react-native";
 import FlatButton from "../UI/FlatButton";
 
 import AuthForm from "./AuthForm";
@@ -70,19 +76,20 @@ const AuthContent = ({ isLogin, onAuthenticate }) => {
     );
 
     return (
-        <View style={styles.authContent}>
-            <AuthForm
-                onSubmit={submitHandler}
-                isLogin={isLogin}
-                invalidCredentials={invalidCredentials}
-            />
-            <View style={styles.buttons}>
-                {createLoginText}
-                <FlatButton onPress={switchAuthModeHandler}>
-                    {isLogin ? "Create an account" : "Log in instead"}
-                </FlatButton>
+        
+            <View style={styles.authContent}>
+                <AuthForm
+                    onSubmit={submitHandler}
+                    isLogin={isLogin}
+                    invalidCredentials={invalidCredentials}
+                />
+                <View style={styles.buttons}>
+                    {createLoginText}
+                    <FlatButton onPress={switchAuthModeHandler}>
+                        {isLogin ? "Create an account" : "Log in instead"}
+                    </FlatButton>
+                </View>
             </View>
-        </View>
     );
 };
 

@@ -43,7 +43,7 @@ const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
         onSubmit({
             firstName: enteredFirstName,
             lastName: enteredLastName,
-            email: enteredEmail.toLowerCase(),
+            email: enteredEmail.toLowerCase().trim(),
             password: enteredPassword,
             confirmPassword: enteredConfirmPassword,
         });
@@ -107,9 +107,7 @@ const AuthForm = ({ onSubmit, invalidCredentials, isLogin }) => {
                 )}
             </View>
             <View>
-                <FlatButton>
-                    Forgotten password?
-                </FlatButton>
+                <FlatButton>Forgotten password?</FlatButton>
             </View>
             <View style={styles.buttons}>
                 <Button onPress={submitHandler}>

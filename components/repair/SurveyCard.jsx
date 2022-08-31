@@ -23,7 +23,12 @@ const SurveyCard = ({ children, onSelect, description }) => {
                 pressed && styles.pressed,
                 isSelected && { backgroundColor: "#315a89" },
             ]}
-            onPress={selectHandler}
+            onPress={() => {
+                setIsSelected((prevState) => {
+                    onSelect(!prevState);
+                    return !prevState;
+                });
+            }}
         >
             {children}
         </Pressable>
@@ -38,7 +43,7 @@ const styles = StyleSheet.create({
         height: 150,
         width: "40%",
         backgroundColor: "#82a6d2",
-        borderRadius: 10,
+        borderRadius: 20,
         justifyContent: "center",
         alignItems: "center",
         elevation: 5,

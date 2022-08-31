@@ -68,6 +68,14 @@ const AccountDetails = ({ profileData }) => {
                         )}
                     />
                     <UserAction
+                        title={"Payment details"}
+                        icon="credit-card"
+                        onPress={onActionSelectHadler.bind(
+                            this,
+                            "paymentDetails"
+                        )}
+                    />
+                    <UserAction
                         title={"Orders"}
                         icon="shopping-cart"
                         onPress={onActionSelectHadler.bind(this, "orders")}
@@ -102,8 +110,8 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 60,
         backgroundColor: "#bcbcbc",
-        justifyContent:"center",
-        alignItems:"center"
+        justifyContent: "center",
+        alignItems: "center",
     },
     nameSection: {
         marginLeft: 40,
@@ -118,7 +126,7 @@ export const styles = StyleSheet.create({
     image: {
         width: "90%",
         height: "90%",
-        borderRadius:60,
+        borderRadius: 60,
     },
 });
 

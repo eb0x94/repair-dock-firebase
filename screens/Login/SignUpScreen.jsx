@@ -32,6 +32,14 @@ const SignUpScreen = () => {
 
             authCtx.authenticate(returnData.token, returnData.userId);
         } catch (error) {
+            if (error.response.data.error.message === "EMAIL_EXISTS") {
+                Alert.alert(
+                    "Creating an account failed",
+                    "There is an existing account under the entered e-mail address."
+                );
+                setIsAuthenticating(false);
+                return;
+            }
             Alert.alert(
                 "Authentication failed",
                 "Couldn't create user, please try again later."

@@ -50,7 +50,7 @@ const DeviceCard = ({ itemDetails, deleteItem, isRepair }) => {
 const styles = StyleSheet.create({
     container: {
         backgroundColor: "lightblue",
-        borderRadius: 6,
+        borderRadius: 20,
         margin: 14,
     },
     textContainer: {

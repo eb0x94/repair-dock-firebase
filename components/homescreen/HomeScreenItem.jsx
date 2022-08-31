@@ -31,8 +31,8 @@ const styles = StyleSheet.create({
         alignItems: "flex-start",
         marginVertical: 12,
         padding: 12,
-        backgroundColor: "lightblue",
-        borderRadius: 4,
+        backgroundColor: "#82a6d2",
+        borderRadius: 20,
         maxHeight: 100,
     },
     icon: {
