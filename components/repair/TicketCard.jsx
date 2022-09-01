@@ -10,17 +10,22 @@ import {
 import { fetchDataWithID } from "../../util/database";
 import Button from "../UI/Button";
 import FlatButton from "../UI/FlatButton";
+import { Picker } from "@react-native-picker/picker";
 
 import Collapsible from "react-native-collapsible";
 
-const TicketCard = ({ ticket, commentAdder, isAdmin }) => {
+const TicketCard = ({ ticket, commentAdder, isAdmin, statusUpdater }) => {
     let { device, date, status } = ticket.ticket;
     let details = ticket.ticket.details;
     let [deviceDetails, setDeviceDetails] = useState({});
+    let surveyDetails = "";
+
     let [isDetails, setIsDetails] = useState(false);
     let [isComment, setIsComment] = useState(false);
     let [comment, setComment] = useState("");
-    let surveyDetails = "";
+
+    //Picker
+    const [selectedStatus, setSelectedStatus] = useState(status);
 
     for (const key in details.survey) {
         if (Object.hasOwnProperty.call(details.survey, key)) {
@@ -61,6 +66,10 @@ const TicketCard = ({ ticket, commentAdder, isAdmin }) => {
         }
     }, [device]);
 
+    useEffect(() => {
+        statusUpdater(selectedStatus, ticket.id);
+    }, [selectedStatus]);
+
     let addInputHandler = (text) => {
         setComment(text);
     };
@@ -87,6 +96,37 @@ const TicketCard = ({ ticket, commentAdder, isAdmin }) => {
         setIsComment(false);
     };
 
+    let statusSwitcher = (
+        <>
+            <Text style={styles.commentText}>Change status:</Text>
+            <View style={styles.pickerView}>
+                <Picker
+                    selectedValue={selectedStatus}
+                    onValueChange={(itemValue, index) => {
+                        setSelectedStatus(itemValue);
+                    }}
+                >
+                    <Picker.Item label="Created" value="Created" />
+                    <Picker.Item label="Diagnostics" value="Diagnostics" />
+                    <Picker.Item
+                        label="Waiting for parts"
+                        value="Waiting for parts"
+                    />
+                    <Picker.Item
+                        label="Repair in progress"
+                        value="Repair in progress"
+                    />
+                    <Picker.Item label="Completed" value="Completed" />
+                    <Picker.Item
+                        label="Waiting payment"
+                        value="Waiting payment"
+                    />
+                    <Picker.Item label="Finished" value="Finished" />
+                </Picker>
+            </View>
+        </>
+    );
+
     let commmentButton = status !== "completed" && (
         <Button
             onPress={!isComment ? () => setIsComment(true) : saveCommentHandler}
@@ -97,43 +137,43 @@ const TicketCard = ({ ticket, commentAdder, isAdmin }) => {
 
     let tapDetails = (
         <Collapsible collapsed={!isDetails}>
-            <View>
-                <View style={styles.borderView}></View>
-                <View style={styles.ticketCommentsView}>
-                    <Text style={styles.commentText}>Comments:</Text>
-                    <View>
-                        <FlatList
-                            data={details.comments}
-                            keyExtractor={(item, index) => index}
-                            renderItem={(item) => (
-                                <View
-                                    style={{
-                                        borderBottomWidth: 0.5,
-                                        paddingHorizontal: 5,
-                                        justifyContent: "center",
-                                        alignItems: item.item.isUser
-                                            ? "flex-end"
-                                            : "flex-start",
-                                    }}
-                                >
-                                    <Text style={styles.messageText}>
-                                        {item.item.commentText}
-                                    </Text>
-                                </View>
-                            )}
-                        />
-                    </View>
-                </View>
-                {isComment && (
-                    <TextInput
-                        style={styles.commentInputBox}
-                        placeholder="Type comment"
-                        value={comment}
-                        onChangeText={addInputHandler}
+            <View style={styles.borderView}></View>
+
+            {isAdmin && statusSwitcher}
+            <View style={styles.ticketCommentsView}>
+                <Text style={styles.commentText}>Comments:</Text>
+                <View>
+                    <FlatList
+                        data={details.comments}
+                        keyExtractor={(item, index) => index}
+                        renderItem={(item) => (
+                            <View
+                                style={{
+                                    borderBottomWidth: 0.5,
+                                    paddingHorizontal: 5,
+                                    justifyContent: "center",
+                                    alignItems: item.item.isUser
+                                        ? "flex-end"
+                                        : "flex-start",
+                                }}
+                            >
+                                <Text style={styles.messageText}>
+                                    {item.item.commentText}
+                                </Text>
+                            </View>
+                        )}
                     />
-                )}
-                {commmentButton}
+                </View>
             </View>
+            {isComment && (
+                <TextInput
+                    style={styles.commentInputBox}
+                    placeholder="Type comment"
+                    value={comment}
+                    onChangeText={addInputHandler}
+                />
+            )}
+            {commmentButton}
         </Collapsible>
     );
 
@@ -155,10 +195,9 @@ const TicketCard = ({ ticket, commentAdder, isAdmin }) => {
                 </View>
                 <Text style={styles.genText}>
                     Status:{" "}
-                    <Text style={styles.statusText}>
-                        {status.charAt(0).toUpperCase() + status.slice(1)}
-                    </Text>
+                    <Text style={styles.statusText}>{selectedStatus}</Text>
                 </Text>
+
                 {surveyDetails.length !== 0 && (
                     <Text style={styles.genText}>
                         Problem:{" "}
@@ -246,6 +285,12 @@ const styles = StyleSheet.create({
     dateText: {
         alignSelf: "center",
         paddingRight: 5,
+    },
+    pickerView: {
+        backgroundColor: "white",
+        borderRadius: 60,
+        paddingHorizontal: 10,
+        marginVertical: 10,
     },
 });
 

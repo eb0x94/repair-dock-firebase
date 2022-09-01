@@ -15,7 +15,7 @@ const OngoingTickets = ({ route }) => {
                 let fetchedTickets = await fetchUserTickets(userId).then(
                     (items) =>
                         items.filter(
-                            (item) => item.ticket.status !== "completed"
+                            (item) => item.ticket.status !== "Finished"
                         )
                 );
                 if (!isMounted) {
@@ -36,9 +36,19 @@ const OngoingTickets = ({ route }) => {
     let updateTicket = (ticketToPush, id) => {
         updateItem(id, "/tickets", ticketToPush)
             .then((res) => {
-                console.log("ticket Updated");
             })
             .catch((error) => console.log(error));
+    };
+
+    let statusUpdater = (newStatus, id) => {
+        tickets.map((ticket) => {
+            if (ticket.id === id) {
+                let ticketItem = ticket.ticket;
+                let update = { ...ticketItem, status: newStatus };
+
+                updateTicket(update, id);
+            }
+        });
     };
 
     let addComment = (details, id) => {
@@ -63,6 +73,7 @@ const OngoingTickets = ({ route }) => {
             isAdmin={isAdmin}
             style={styles.container}
             tickets={tickets}
+            statusUpdater={statusUpdater}
             addComment={addComment}
         />
     );

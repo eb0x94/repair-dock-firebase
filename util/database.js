@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const DB_URL =
-    "https://repair-dock-default-rtdb.europe-west1.firebasedatabase.app";
+import { DB_URL } from "./keys";
 
 // CREATE
 
@@ -10,6 +9,7 @@ export const createEntry = async (location, itemData) => {
     let createdItemID = response.data.name;
     return createdItemID;
 };
+
 export const createDBUser = async (location, userId, itemData) => {
     const response = await axios.put(
         DB_URL + `/${location}/${userId}.json`,

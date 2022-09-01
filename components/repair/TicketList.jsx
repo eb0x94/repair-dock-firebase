@@ -1,7 +1,7 @@
 import { FlatList, StyleSheet, Text } from "react-native";
 import TicketCard from "./TicketCard";
 
-const TicketList = ({ tickets, addComment, isAdmin }) => {
+const TicketList = ({ tickets, addComment, isAdmin, statusUpdater }) => {
     let ticketHandler = (comment, id) => {
         addComment(comment, id);
     };
@@ -24,6 +24,7 @@ const TicketList = ({ tickets, addComment, isAdmin }) => {
                     <TicketCard
                         isAdmin={isAdmin}
                         ticket={item}
+                        statusUpdater={statusUpdater}
                         commentAdder={ticketHandler}
                     />
                 )}

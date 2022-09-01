@@ -39,7 +39,7 @@ const SelectProvider = ({ route }) => {
 
     let createTicket = (shopID) => {
         let ticketDetails = {
-            status: "created",
+            status: "Created",
             device: device.id,
             users: {
                 userId: device.data.ownerId,
