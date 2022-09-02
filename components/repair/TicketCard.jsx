@@ -14,7 +14,7 @@ import { Picker } from "@react-native-picker/picker";
 
 import Collapsible from "react-native-collapsible";
 
-const TicketCard = ({ ticket, commentAdder, isAdmin, statusUpdater }) => {
+const TicketCard = ({ ticket, commentAdder, isAdmin, statusUpdater, finished }) => {
     let { device, date, status } = ticket.ticket;
     let details = ticket.ticket.details;
     let [deviceDetails, setDeviceDetails] = useState({});
@@ -126,8 +126,12 @@ const TicketCard = ({ ticket, commentAdder, isAdmin, statusUpdater }) => {
             </View>
         </>
     );
+    
+    if(finished){
+        statusSwitcher = undefined;
+    }
 
-    let commmentButton = status !== "completed" && (
+    let commmentButton = status !== "Finished" && (
         <Button
             onPress={!isComment ? () => setIsComment(true) : saveCommentHandler}
         >

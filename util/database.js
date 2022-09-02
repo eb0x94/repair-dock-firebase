@@ -51,6 +51,8 @@ export const fetchUserDevices = async (userId) => {
     }
     return fetchedData;
 };
+
+
 export const fetchShops = async () => {
     const response = await axios.get(DB_URL + "/users.json");
     let fetchedData = [];

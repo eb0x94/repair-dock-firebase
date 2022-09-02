@@ -111,7 +111,11 @@ const AuthenticatedScreenStack = () => {
                 component={OngoingTickets}
                 initialParams={{ userId: loggedUserId }}
             />
-            <Stack.Screen name="RepairHistory" component={RepairHistory} />
+            <Stack.Screen
+                name="RepairHistory"
+                component={RepairHistory}
+                initialParams={{ userId: loggedUserId }}
+            />
         </Stack.Navigator>
     );
 };

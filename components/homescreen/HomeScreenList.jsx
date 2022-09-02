@@ -25,7 +25,7 @@ const HomeScreenList = ({ homeItems }) => {
             case "historyRepair":
                 navigation.navigate("RepairHistory", { isAdmin: false });
                 break;
-            case "historyRepairAdmin":
+            case "historyRepairsAdmin":
                 navigation.navigate("RepairHistory", { isAdmin: true });
                 break;
             default:

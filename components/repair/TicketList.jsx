@@ -1,7 +1,13 @@
 import { FlatList, StyleSheet, Text } from "react-native";
 import TicketCard from "./TicketCard";
 
-const TicketList = ({ tickets, addComment, isAdmin, statusUpdater }) => {
+const TicketList = ({
+    tickets,
+    addComment,
+    isAdmin,
+    statusUpdater,
+    finished,
+}) => {
     let ticketHandler = (comment, id) => {
         addComment(comment, id);
     };
@@ -9,7 +15,9 @@ const TicketList = ({ tickets, addComment, isAdmin, statusUpdater }) => {
     if (tickets.length == 0) {
         return (
             <Text style={styles.infoText}>
-                You don't have any created tickets yet
+                You don't have any{" "}
+                {finished ? "finished" : isAdmin ? "opened" : "created"} tickets
+                yet
             </Text>
         );
     }
@@ -26,6 +34,7 @@ const TicketList = ({ tickets, addComment, isAdmin, statusUpdater }) => {
                         ticket={item}
                         statusUpdater={statusUpdater}
                         commentAdder={ticketHandler}
+                        finished={finished}
                     />
                 )}
             />

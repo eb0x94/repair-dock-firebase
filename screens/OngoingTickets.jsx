@@ -35,8 +35,7 @@ const OngoingTickets = ({ route }) => {
 
     let updateTicket = (ticketToPush, id) => {
         updateItem(id, "/tickets", ticketToPush)
-            .then((res) => {
-            })
+            .then((res) => {})
             .catch((error) => console.log(error));
     };
 
@@ -75,6 +74,7 @@ const OngoingTickets = ({ route }) => {
             tickets={tickets}
             statusUpdater={statusUpdater}
             addComment={addComment}
+            finished={false}
         />
     );
 };
